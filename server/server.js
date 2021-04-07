@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -5,7 +6,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { readdirSync } = require('fs');
 const path = require('path');
-require('dotenv').config();
 
 // app
 const app = express();
@@ -28,12 +28,12 @@ app.use(bodyParser.json({ limit: '2mb' }));
 app.use(cors());
 
 // routes middleware
-readdirSync('./routes').map((r) => app.use('/api', require('./routes/' + r)));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
+readdirSync('./routes').map((r) => app.use('/', require('./routes/' + r)));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+// });
 
 // port
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
