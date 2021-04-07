@@ -1,0 +1,19 @@
+{
+  "name": "harware-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server && npm i && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irinatarshinaeva/hardware-store.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/irinatarshinaeva/hardware-store/issues"
+  },
+  "homepage": "https://github.com/irinatarshinaeva/hardware-store#readme"
+}
