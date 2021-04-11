@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { readdirSync } = require('fs');
+const path = require('path');
 
 // app
 const app = express();
@@ -21,13 +22,16 @@ mongoose
   .catch((err) => console.log('DB CONNECTION ERR', err));
 
 // middlewares
+app.use(express.static(path.resolve('../client/build')));
 app.use(morgan('dev'));
 app.use(bodyParser.json({ limit: '2mb' }));
 app.use(cors());
 
 // routes middleware
-readdirSync('./routes').map((r) => app.use('/', require('./routes/' + r)));
-
+readdirSync('./routes').map((r) => app.use('/api', require('./routes/' + r)));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('../client/build/index.html'));
+});
 
 // port
 const port = process.env.PORT || 3000;
