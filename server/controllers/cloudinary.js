@@ -1,4 +1,4 @@
-const cloudinary = require("cloudinary");
+const cloudinary = require('cloudinary');
 
 // config
 cloudinary.config({
@@ -9,14 +9,18 @@ cloudinary.config({
 
 // req.files.file.path
 exports.upload = async (req, res) => {
-  let result = await cloudinary.uploader.upload(req.body.image, {
-    public_id: `${Date.now()}`,
-    resource_type: "auto", // jpeg, png
-  });
-  res.json({
-    public_id: result.public_id,
-    url: result.secure_url,
-  });
+  try {
+    let result = await cloudinary.uploader.upload(req.body.image, {
+      public_id: `${Date.now()}`,
+      resource_type: 'auto', // jpeg, png
+    });
+    res.json({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  } catch (err) {
+    console.log('BACKEND ERR ----->', err);
+  }
 };
 
 exports.remove = (req, res) => {
@@ -24,6 +28,6 @@ exports.remove = (req, res) => {
 
   cloudinary.uploader.destroy(image_id, (err, result) => {
     if (err) return res.json({ success: false, err });
-    res.send("ok");
+    res.send('ok');
   });
 };
