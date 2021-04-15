@@ -1,8 +1,8 @@
-import React from 'react';
-import Resizer from 'react-image-file-resizer';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { Avatar, Badge } from 'antd';
+import React from "react";
+import Resizer from "react-image-file-resizer";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { Avatar, Badge } from "antd";
 
 const FileUpload = ({ values, setValues, setLoading }) => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -20,23 +20,23 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           files[i],
           720,
           720,
-          'JPEG',
+          "JPEG",
           100,
           0,
           (uri) => {
             // console.log(uri);
             axios
               .post(
-                `/uploadimages`,
+                `${process.env.REACT_APP_API}/uploadimages`,
                 { image: uri },
                 {
                   headers: {
-                    authtoken: user ? user.token : '',
+                    authtoken: user ? user.token : "",
                   },
                 }
               )
               .then((res) => {
-                console.log('IMAGE UPLOAD RES DATA', res);
+                console.log("IMAGE UPLOAD RES DATA", res);
                 setLoading(false);
                 allUploadedFiles.push(res.data);
 
@@ -44,10 +44,10 @@ const FileUpload = ({ values, setValues, setLoading }) => {
               })
               .catch((err) => {
                 setLoading(false);
-                console.log('CLOUDINARY UPLOAD ERR', err);
+                console.log("CLOUDINARY UPLOAD ERR", err);
               });
           },
-          'base64'
+          "base64"
         );
       }
     }
@@ -60,11 +60,11 @@ const FileUpload = ({ values, setValues, setLoading }) => {
     // console.log("remove image", public_id);
     axios
       .post(
-        `/removeimage`,
+        `${process.env.REACT_APP_API}/removeimage`,
         { public_id },
         {
           headers: {
-            authtoken: user ? user.token : '',
+            authtoken: user ? user.token : "",
           },
         }
       )
@@ -91,7 +91,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
               count="X"
               key={image.public_id}
               onClick={() => handleImageRemove(image.public_id)}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <Avatar
                 src={image.url}
